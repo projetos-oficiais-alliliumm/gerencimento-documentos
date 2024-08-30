@@ -1,0 +1,24 @@
+
+model User {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+}
+
+datasource db {
+  provider = "postgresql" // Ou "mysql" ou "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//////// Package Projeto Raiz
+
+  "scripts": {
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "start": "concurrently \"npm start --prefix frontend\" \"npm start --prefix backend\""
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+  }
+
+npm run start:backend
+npm run install:all
+npm start
