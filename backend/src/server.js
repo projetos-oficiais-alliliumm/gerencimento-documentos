@@ -1,10 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-// const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 
 const app = express();
 const port = 5000;
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(express.json());
@@ -47,13 +47,21 @@ app.get('/api/message', (req, res) => {
 //     console.log(users);
 // }
 
-// main()
-//     .catch(e => {
-//         throw e;
-//     })
-//     .finally(async () => {
-//         await prisma.$disconnect();
-//     });
+async function main() {
+    const tipoDocumento = await prisma.tipoDocumento.create({
+        data: {
+            DescTipoDocumento: 'Relatório',
+        },
+    });
+    console.log('TipoDocumento criado:', tipoDocumento);
+}
+main()
+    .catch(e => {
+        throw e;
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
 
 
 app.listen(port, () => {

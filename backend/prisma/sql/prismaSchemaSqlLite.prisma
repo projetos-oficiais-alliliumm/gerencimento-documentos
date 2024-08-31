@@ -1,26 +1,22 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-// https://www.prisma.io/docs
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-// example .env
-// DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA"
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Setor {
   id                Int          @id @default(autoincrement())
-  Sigla             String       @db.VarChar(10)
-  DescSetor         String       @db.VarChar(60)
+  Sigla             String
+  DescSetor         String
   tramitesEnviados  Tramitacao[] @relation("SetorEnviado")
   tramitesRecebidos Tramitacao[] @relation("SetorRecebe")
 }
@@ -39,11 +35,11 @@ model Tramitacao {
 
 model Documento {
   id               Int           @id @default(autoincrement())
-  NbDocumento      String        @db.VarChar(10)
-  Titulo           String        @db.VarChar(40)
-  DescDocumento    String        @db.VarChar(255)
+  NbDocumento      String
+  Titulo           String
+  DescDocumento    String
   DataDocumento    DateTime
-  PathArquivoPDF   String        @db.VarChar(100)
+  PathArquivoPDF   String
   TipoDocumento_id Int
   TipoDocumento    TipoDocumento @relation(fields: [TipoDocumento_id], references: [id])
   tramiteDocumento Tramitacao[]
@@ -51,6 +47,6 @@ model Documento {
 
 model TipoDocumento {
   id                Int         @id @default(autoincrement())
-  DescTipoDocumento String      @db.VarChar(30)
+  DescTipoDocumento String
   documentos        Documento[]
 }

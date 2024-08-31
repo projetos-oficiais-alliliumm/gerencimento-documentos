@@ -1,0 +1,33 @@
+main {
+    width: 100%;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container{
+    width : 90%;
+}
+
+.container > h1 {
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+h1 {
+    font-family: "Poppins", san-serif;
+    font-style: normal;
+    font-weight: 300;
+}
+
+.container > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    min-height: 65vh;
+}
+

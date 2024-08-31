@@ -1,0 +1,8 @@
+header {
+    background-color: rgba(79,180,251,1);
+    border: solid 1px rgba(57,133,248,1);
+    width: 99.9%;
+    min-height: 8vh;
+    shadow-radius: 0px;
+    box-shadow: 1px 1px 0px  0.02px rgba(47,127,249,1) ;
+}

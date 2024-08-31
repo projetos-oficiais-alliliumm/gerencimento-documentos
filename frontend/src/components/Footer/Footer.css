@@ -1,0 +1,16 @@
+footer {
+    width: 100%;
+    min-height: 8vh;
+    flex-direction: column;
+    display:flex;
+    text-align: center;
+    justify-content: flex-end;
+}
+
+footer > p {
+    font-family: "Poppins", san-serif;
+    font-style: normal;
+    font-weight: 300;
+    color: rgba(60,95,140,1);
+    font-size: 14px;
+}
