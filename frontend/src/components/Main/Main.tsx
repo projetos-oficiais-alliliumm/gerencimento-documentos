@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './Main.css';
 import ContainerList from "../containerBox/containerBox";
+import Button from "../Button/Button";
 
 function Main (){
 
@@ -14,6 +15,7 @@ function Main (){
                 <div>
                     <ContainerList>
                         Teste
+                        <Button>Teste botao</Button>
                     </ContainerList>
                 </div>
             </div>
