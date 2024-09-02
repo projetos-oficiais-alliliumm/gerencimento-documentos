@@ -1,12 +1,10 @@
 import React from "react";
 import { AreaFooter } from "./styled";
 
-function Footer(){
+export default function Footer(){
     return (
         <AreaFooter>
             <p>Teste de Alessandra</p>
         </AreaFooter>
     );
 }
-
-export default Footer

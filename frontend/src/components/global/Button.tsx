@@ -7,6 +7,7 @@ interface ButtonProps {
     bgHC?: string;
     mr?: string;
     bdr?: string;
+    hg?: string;
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -16,12 +17,12 @@ export const Button = styled.button<ButtonProps>`
     transition: all 0.3s ease-in-out;
     margin: ${(props) => props.mr || "auto"};
     border-radius: 10px;
-    border: 0.05px solid ${(props) => props.bdr || "#3f89ff52"};
+    border: ${(props) => props.bdr || "0.05px solid #3f89ff52"};
     font-size: 14px;
     align-items: center;
     appearance: none; // Remover Estilo Padrão
     display: inline-flex;
-    height: 48px;
+    height: ${(props) => props.hg || "48px"};
     letter-spacing: .25px;
     padding: 2px 24px;
     width: auto;
