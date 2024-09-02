@@ -1,11 +1,11 @@
 import React from "react";
-import './Footer.css';
+import { AreaFooter } from "./styled";
 
 function Footer(){
     return (
-        <footer>
+        <AreaFooter>
             <p>Teste de Alessandra</p>
-        </footer>
+        </AreaFooter>
     );
 }
 
