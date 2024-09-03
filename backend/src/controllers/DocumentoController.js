@@ -2,9 +2,11 @@ const express = require("express");
 const { PrismaClient } = require('@prisma/client');
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 const prisma = new PrismaClient();
 
+router.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // ARQUIVOS 
 const storaged = multer.diskStorage({
     destination:function(req,file,cb){
@@ -12,7 +14,7 @@ const storaged = multer.diskStorage({
     },
     filename: function(req,file,cb){
         const nb = req.body.nb || '|';
-        cb(null, `${Date.now()}-${nb}-${file.originalname}`)
+        cb(null, `${Date.now()}-${file.originalname}`)
     }
 })
 const upload = multer({ storage: storaged });
@@ -65,7 +67,7 @@ router.put("/:id", uploadTemporary.single('arquivo'), async(req,res) => {
     if(desc) updateData.DescDocumento = desc;
     if(tipoid) updateData.TipoDocumento_id = parseInt(tipoid);
     if(req.file) {
-        const filePath = `uploads/${Date.now()}-${id}-${req.file.originalname}`;
+        const filePath = `uploads/${Date.now()}-${req.file.originalname}`;
         fs.writeFileSync(filePath, req.file.buffer);
         updateData.PathArquivoPDF = filePath;
     }
@@ -202,7 +204,18 @@ router.get("/:id", async(req,res) => {
             },
         });
 
-        return res.status(200).json(response)
+        if (!response) {
+            return res.status(404).json({ error: 'Documento não encontrado' });
+        }
+
+        const fileName = path.basename(response.PathArquivoPDF);
+        const encodedFileName = encodeURIComponent(fileName);
+        const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${encodedFileName}`;
+
+        res.status(200).json({
+            response
+            ,arquivoUrl: fileUrl
+        });
     }
     catch(error){
         console.error('Erro ao buscar o documento:', error);
@@ -363,7 +376,7 @@ router.put(":docId/tramite/:id", async(req,res) => {
                 Documento_id: parseInt(docId)
             },
             data: {
-                DataHoraRecebe: Date.now
+                DataHoraRecebe: new Date()
             }
         })
 

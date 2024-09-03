@@ -4,8 +4,8 @@ import { AreaMain } from "../../components/Main";
 import { Container, ContainerBox } from "../../components/global/Container";
 import { Title1 } from "../../components/global/Title";
 import { Button } from "../../components/global/Button";
-import Modal from "../../components/global/Modal"
-
+import Modal from "../../components/global/Modal";
+import {Table} from "./table";
 
 function Home() {
     const [openModal, setOpenModal] = React.useState(false);
@@ -20,7 +20,8 @@ function Home() {
                     <div className="mtop" >
                         <Button onClick={()=> setOpenModal(true)}>Novo Documento</Button>
                     </div>
-                    <ContainerBox opacity="0.7" mh="55vh">
+                    <ContainerBox bgC="#ffff" opacity="0.7" mh="55vh">
+                        <Table />
                     </ContainerBox>                
                 </Container>
             </AreaMain>

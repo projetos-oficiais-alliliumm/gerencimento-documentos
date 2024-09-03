@@ -43,7 +43,7 @@ model Documento {
   Titulo           String        @db.VarChar(40)
   DescDocumento    String        @db.VarChar(255)
   DataDocumento    DateTime      @default(now())
-  PathArquivoPDF   String        @db.VarChar(255)
+  PathArquivoPDF   String
   TipoDocumento_id Int
   TipoDocumento    TipoDocumento @relation(fields: [TipoDocumento_id], references: [id])
   tramiteDocumento Tramitacao[]
