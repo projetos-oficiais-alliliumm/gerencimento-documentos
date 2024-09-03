@@ -17,7 +17,7 @@ Envio e recebimento de documentos entre setores.
   - PostegreSQL
 
 ## Requisitos para execução local
-- Node Js > 17.0.0
+- Node JS > 17.0.0
 - PostgreSQL
 
 ## Procedimentos para execução local
