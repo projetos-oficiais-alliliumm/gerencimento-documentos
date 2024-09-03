@@ -58,11 +58,13 @@ Criar servidor e o database no SGBD com esses atributos paro o arquivo de variá
 1. Criar arquivo ```.env``` no diretório ```backend``` => ```backend/.env```
 2. Incluir a variável abaixo de acordo com o servidor criado no SDBD
   > DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA"
-  - USER => Usuário da Conexão
-  - PASSWORD => Senha da Conexão
-  - HOST => Hostname/Adress da Conexão
-  - DATABASE => Nome do Banco
-  - SCHEMA => Schema do Banco
+
+  > Especificações
+  > - USER => Usuário da Conexão
+  > - PASSWORD => Senha da Conexão
+  > - HOST => Hostname/Adress da Conexão
+  > - DATABASE => Nome do Banco
+  > - SCHEMA => Schema do Banco
 
 ### Configuração do Prisma
 
