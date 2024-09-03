@@ -2,13 +2,29 @@
 
 Envio e recebimento de documentos entre setores.
 
-## Frameworks 
+
+## Desenvolvimento 
+
+- Frontend
+  - Typescript
+  - React JS
+  - Node JS
+- Backend
+  - Javascript
+  - Express
+  - Prisma ORM
+- Banco
+  - PostegreSQL
 
 ## Requisitos para execução local
 - Node Js > 17.0.0
 - PostgreSQL
 
 ## Procedimentos para execução local
+
+### Requisitos para execução local
+- Node Js > 17.0.0
+- PostgreSQL
 
 ### Instalação de dependência
 
