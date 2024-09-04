@@ -17,34 +17,37 @@ interface ModalProps {
 const BackModal= styled.div`
     display: flex;
     position: fixed;
-    z-index: 1; 
+    z-index: 1000; 
     padding-top: 100px;
     left: 0;
     top: 0;
     height: 100%;
     overflow: auto;
-    // background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.5);
     flex-direction: column;
     align-items: center;
     justify-content:center;
 `;
 
-const ModalBox = styled(ContainerBox)`
-    background-color: #F6F9FE;
+const ModalBox = styled.div<{ mw?: string; mh?: string }>`
+    background-color: #ffff;
     max-width: ${(props) => props.mw || "85vh"};
     min-height: ${(props) => props.mh || "70vh"};
     border-radius: 15px;
+    box-shadow: 0px -3px 8px #0000003d,
+                0px 3px 8px #0000003d;
     margin: auto;
     display: block;
 `;
 
 const ModalHeader = styled.div`
-    background-color: #F6F9FE;
+    background-color: #ffff;
     border-radius: 15px;
     margin: auto;
     display: flex;
     padding: 20px;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 const iconClose = {
@@ -57,35 +60,34 @@ export default function Modal(
         isOpen,
         setModalOpen,
         childrenTitle,
-        children
+        children,
+        mh,
+        mw
     }: ModalProps
 ){
-
-    if(isOpen){
-
-        return (
-            <BackModal>
-                <ModalBox>
-                    <Container>
-                        <ModalHeader>
-                            <Title2>
-                                {childrenTitle}
-                            </Title2>
-                            <Button 
-                                txtC="black"
-                                bdr="none"
-                                bgHC="#ff0404"
-                                hg="40"
-                                onClick={setModalOpen}
-                                >
-                                    <TfiClose style={iconClose} />
-                                </Button>
-                        </ModalHeader>
-                            {children}
-                    </Container>
-                </ModalBox>
-            </BackModal>
-        );
-    }
-    return null;
+    if (!isOpen) return null;
+    
+    return (
+        <BackModal>
+            <ModalBox mh={mh} mw={mw}>
+                <Container>
+                    <ModalHeader>
+                        <Title2>
+                            {childrenTitle}
+                        </Title2>
+                        <Button 
+                            txtC="black"
+                            bdr="none"
+                            bgHC="#ff0404"
+                            hg="50px"
+                            onClick={setModalOpen}
+                            >
+                                <TfiClose style={iconClose} />
+                            </Button>
+                    </ModalHeader>
+                        {children}
+                </Container>
+            </ModalBox>
+        </BackModal>
+    );
 }

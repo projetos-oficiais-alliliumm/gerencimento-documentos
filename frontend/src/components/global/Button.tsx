@@ -8,6 +8,7 @@ interface ButtonProps {
     mr?: string;
     bdr?: string;
     hg?: string;
+    wd?: string;
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -25,7 +26,7 @@ export const Button = styled.button<ButtonProps>`
     height: ${(props) => props.hg || "48px"};
     letter-spacing: .25px;
     padding: 2px 24px;
-    width: auto;
+    width: ${(props) => props.wd || "auto"};
     overflow: visible;    
     font-weight: 600;
 

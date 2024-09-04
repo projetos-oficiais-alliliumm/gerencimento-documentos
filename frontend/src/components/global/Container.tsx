@@ -20,7 +20,9 @@ export const ContainerBox = styled.div<ContainerProps>`
     background-color: ${(props) => props.bgC || "#e6e6e69e"};
     opacity: ${(props) => props.opacity || ""};
     max-width: ${(props) => props.mw || ""};
-    min-height: ${(props) => props.mh || "55vh"};
-    box-shadow: 0px -3px 8px #0000003d,
-                0px 3px 8px #0000003d;   
+    max-height: ${(props) => props.mh || "55vh"};
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    margin: 10px 0;
+    overflow: auto;   
 `;

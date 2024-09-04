@@ -8,7 +8,6 @@ export const AreaFooter = styled.footer `
     text-align: center;
     justify-content: flex-end;
     bottom:0;
-    position:fixed;
     padding:40px;
 
     p {

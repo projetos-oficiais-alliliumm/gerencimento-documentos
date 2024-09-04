@@ -315,7 +315,7 @@ router.delete("/tipo/:id", async(req,res) => {
 })
 
 // Todos os Tipos
-router.get("/tipo", async(req,res) => {
+router.get("/tipo/all", async(req,res) => {
     try{
         const response = await prisma.tipoDocumento.findMany()
 

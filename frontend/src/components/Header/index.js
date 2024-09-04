@@ -4,6 +4,7 @@ import { AreaHeader } from './styled'
 export default function Header(){
     return (
         <AreaHeader>
+        
         </AreaHeader>
     );
 }

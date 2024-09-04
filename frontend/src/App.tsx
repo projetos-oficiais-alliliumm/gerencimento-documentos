@@ -6,6 +6,8 @@ import Footer from './components/Footer';
 
 import router from './Routes';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './App.css';
 
 function App() {
