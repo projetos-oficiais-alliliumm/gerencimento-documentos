@@ -118,25 +118,28 @@ export default function Header(){
     };
 
 
-    const handleFormDocAction = async () => {
+    const handleFormDocActionSetor = async () => {
         if (!validateForm()) return;
 
-        const formData = new FormData();
-        formData.append('Sigla', Sigla);
-        formData.append('DescSetor', DescSetor);
-
         try {
-            let response;
-            const requestOptions = {
+            const response = await fetch(api('/setor'),{
                 method: 'POST',
-                body: formData,
-            };
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sigla: Sigla,
+                    desc: DescSetor,
+                }),
+            })
 
-                response = await fetch(api('/documento'), requestOptions);
             if (response.ok) {
-                console.log(`Documento criado com sucesso!`);
+                console.log('Setor criado com sucesso!');
                 setOpenModalNewSetor(false);
+                const res = await fetchRecordsSetor();
+                setRecords(res.data);
             } else {
+                setOpenModalErro(true);
                 throw new Error('Erro ao enviar o formulário');
             }
         } catch (error) {
@@ -212,12 +215,12 @@ export default function Header(){
                     <ContainerS wd="9">
                         <div style={styledContainerDiv}>
                         <div style={styledEntreDiv}>
-                            <Label>Número Documento</Label>
+                            <Label>Sigla</Label>
                             <Input type="text" value={Sigla} onChange={(e) => setSigla(e.target.value)}/>
                             {errors.Sigla && <span>{errors.Sigla}</span>}
                         </div>
                         <div>
-                            <Label>Título</Label>
+                            <Label>Setor</Label>
                             <Input value={DescSetor} type="text" onChange={(e) => setTitulo(e.target.value)} />
                             {errors.DescSetor && <span>{errors.DescSetor}</span>}
                         </div>
@@ -228,7 +231,7 @@ export default function Header(){
                                 bgHC="#1b3e75"
                                 mr="0"
                                 hg="38px"
-                                onClick={handleFormDocAction}
+                                onClick={handleFormDocActionSetor}
                                 >Adicionar</Button> 
                         </div>
                     </div>

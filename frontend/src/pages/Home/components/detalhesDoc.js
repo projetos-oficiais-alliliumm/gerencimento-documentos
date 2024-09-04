@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Api from '../../../api';
 
-import { Container } from "../../../components/global/Container";
+import { Container, ContainerBox } from "../../../components/global/Container";
 import { Button } from "../../../components/global/Button";
 import { Input, TextArea } from "../../../components/global/Input";
 import { Label } from "../../../components/global/Label";
 
 import Modal from "../../../components/global/Modal";
 import Form from 'react-bootstrap/Form';
+import down from "../../../assets/down.png";
 
 const { api } = Api();
 
+// Modal Alterar Documento
 const styledContainerDiv = {
     display: "flex", 
     justifyContent: "space-between", 
@@ -28,18 +30,28 @@ const styledBotaoDiv = {
     width: "100%"
 }
 
+// Margem entre inputs 
 const styledEntreDiv = {
     marginRight: "20px"
 }
 
+// Modal Detail Documento
 const styledContDiv = {
-    border:'1px solid black',
     padding: '20px',
 }
 
 const styleDivRow = {
     display: "flex", 
-    border:'1px solid black',
+    padding: '5px',
+}
+const styleRowSpan = {
+    marginRight: "10px"
+}
+const styleInpRowH = {
+    padding: '5px',
+    backgroundColor: "#fff",
+    border: "1px solid #ddd",
+    borderRadius: "7px"
 }
 export default function DetalhesDoc({ selectedDoc, openModalDetails, setOpenModalDetails,onSaveSuccess}){
     const [openModalErro, setOpenModalErro] = useState(false);
@@ -182,43 +194,59 @@ export default function DetalhesDoc({ selectedDoc, openModalDetails, setOpenModa
             setModalOpen={() => setOpenModalDetails(!openModalDetails)}
             >
                 
-            <Container wd="9" style={styledContDiv}>
-                <div style={styleDivRow}>
-                    <span>Número do Documento:</span><span>{dataUpdate?.NbDocumento}</span>
-                    <span>Título:</span><span>{dataUpdate?.Titulo}</span>
-                </div>
-                <div style={styleDivRow}>
-                    <span>Tipo:</span><span>{dataUpdate?.TipoDocumento ? dataUpdate?.DescTipoDocumento : 'Tipo não disponível'}</span>
-                    <span>Data:</span><span>{dataUpdate?.DataDocumento}</span>
-                </div>
-                <div style={styleDivRow}>
-                    {dataUpdate?.PathArquivoPDF && (
-                        <p><a href={dataUpdate.arquivoUrl} download>Download do Arquivo</a></p>
-                    )}
-                </div>
-                <div style={styleDivRow}>
-                    <span><p>Descrição:</p>{dataUpdate?.DescDocumento}</span>
-                </div>
-                <div>
-                    <Button
-                            txtC="#1b3e75"
-                            bgC='#caf1ff75'
-                            bgHC="#e7cf11"
-                            mr=""
-                            hg="38px"
-                            onClick={()=> setOpenModal(true)}
-                            >Alterar</Button> 
-                    <Button
-                            txtC="#1b3e75"
-                            bgC='#caf1ff75'
-                            bgHC="#e70d0d"
-                            mr="10px"
-                            hg="38px"
-                            onClick={()=> handleDelete(true)}
-                            >Excluir</Button> 
-                </div>
-            <input value={selectedDoc} type='hidden'  id="idDocumento"/>
-
+            <Container wd="9">
+                <ContainerBox style={styledContDiv}>
+                    <div style={styleDivRow}>
+                        <span style={styleRowSpan}>
+                            <p style={{marginBottom:'0.5rem'}}>Número do Documento:</p>
+                            <div style={styleInpRowH}>{dataUpdate?.NbDocumento}</div>
+                        </span>
+                        <span style={styleRowSpan}>
+                            <p style={{marginBottom:'0.5rem'}}>Título:</p>
+                            <div style={styleInpRowH}>{dataUpdate?.Titulo}</div>
+                        </span>
+                    </div>
+                    <div style={styleDivRow}>
+                        <span style={styleRowSpan}>
+                            <p style={{marginBottom:'0.5rem'}}>Tipo:</p>
+                            <div style={styleInpRowH}>{dataUpdate?.DescTipoDocumento}</div>
+                        </span>
+                        <span style={styleRowSpan}>
+                            <p style={{marginBottom:'0.5rem'}}>Data:</p>
+                            <div style={styleInpRowH}>{dataUpdate?.DataDocumento}</div>
+                        </span>
+                    </div>
+                    <div style={styleDivRow}>
+                        <span style={styleRowSpan}>
+                            <p style={{marginBottom:'0.5rem'}}>Descrição:</p>
+                            <div style={styleInpRowH}>{dataUpdate?.DescDocumento}</div>
+                        </span>
+                    </div>
+                    <div style={{width: "50px",height:"50px"}}>
+                        {dataUpdate?.PathArquivoPDF && (
+                            <p><a href={dataUpdate.arquivoUrl} download><img src={down}/></a></p>
+                        )}
+                    </div>
+                    <div>
+                        <Button
+                                txtC="#1b3e75"
+                                bgC='#caf1ff75'
+                                bgHC="#e7cf11"
+                                mr=""
+                                hg="38px"
+                                onClick={()=> setOpenModal(true)}
+                                >Alterar</Button> 
+                        <Button
+                                txtC="#1b3e75"
+                                bgC='#caf1ff75'
+                                bgHC="#e70d0d"
+                                mr="10px"
+                                hg="38px"
+                                onClick={()=> handleDelete(true)}
+                                >Excluir</Button> 
+                    </div>
+                    <input value={selectedDoc} type='hidden'  id="idDocumento"/>
+                </ContainerBox>
             </Container>
 
             <Modal

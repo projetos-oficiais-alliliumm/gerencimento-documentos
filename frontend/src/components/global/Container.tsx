@@ -6,6 +6,7 @@ interface ContainerProps {
     wd?: string;
     opacity?: string;
     bgC?: string;
+    ht?: string;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -30,6 +31,7 @@ export const ContainerBox = styled.div<ContainerProps>`
     opacity: ${(props) => props.opacity || ""};
     max-width: ${(props) => props.mw || ""};
     max-height: ${(props) => props.mh || "55vh"};
+    height: ${(props) => props.ht || "auto"};
     border: 1px solid #ddd;
     border-radius: 7px;
     margin: 10px 0;
