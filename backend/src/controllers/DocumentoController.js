@@ -6,7 +6,6 @@ const path = require('path');
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // ARQUIVOS 
 const storaged = multer.diskStorage({
     destination:function(req,file,cb){

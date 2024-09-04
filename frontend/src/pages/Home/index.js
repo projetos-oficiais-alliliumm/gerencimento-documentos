@@ -11,7 +11,7 @@ import { Input, TextArea } from "../../components/global/Input";
 import { Label } from "../../components/global/Label";
 
 import Modal from "../../components/global/Modal";
-import TableIndex from "./tableIndex";
+import TableIndex from "./components/tableIndex";
 import Form from 'react-bootstrap/Form';
 
 
@@ -41,9 +41,20 @@ function Home() {
     const [openModal, setOpenModal] = useState(false);
     const [openModalErro, setOpenModalErro] = useState(false);
     const [optionTipoDoc, setOptionTipoDoc] = useState([]);
+
     const [filterNbDoc, setFilterNbDoc] = useState('');
     const [filterTitulo, setFilterTitulo] = useState('');
     const [filterTipo, setFilterTipo] = useState('');
+
+    const fetchRecords = async () => {
+        try {
+            const res = await axios.get(api('/documento/'));
+            return res;
+        } catch (error) {
+            setOpenModalErro(true);
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         axios
@@ -56,6 +67,64 @@ function Home() {
                 console.log(error)
             });
     }, []);
+
+    const [numeroDocumento, setNumeroDocumento] = useState('');
+    const [titulo, setTitulo] = useState('');
+    const [tipo, setTipo] = useState('');
+    const [dataDocumento, setDataDocumento] = useState('');
+    const [descricao, setDescricao] = useState('');
+    const [arquivo, setArquivo] = useState(null);
+    const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        setNumeroDocumento('');
+        setTitulo('');
+        setTipo('');
+        setDataDocumento('');
+        setDescricao('');
+    }, []);
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!numeroDocumento) newErrors.numeroDocumento = "Número do documento é obrigatório";
+        if (!titulo) newErrors.titulo = "Título é obrigatório";
+        if (!tipo) newErrors.tipo = "Tipo é obrigatório";
+        if (!dataDocumento) newErrors.dataDocumento = "Data do documento é obrigatória";
+        if (!arquivo) newErrors.arquivo = "Arquivo é obrigatório";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+
+    const handleFormDocAction = async () => {
+        if (!validateForm()) return;
+
+        const formData = new FormData();
+        formData.append('nb', numeroDocumento);
+        formData.append('titulo', titulo);
+        formData.append('desc', descricao);
+        formData.append('tipoid', tipo);
+        formData.append('dataDocumento', dataDocumento);
+        if (arquivo) formData.append('arquivo', arquivo);
+
+        try {
+            let response;
+            const requestOptions = {
+                method: 'POST',
+                body: formData,
+            };
+
+                response = await fetch(api('/documento'), requestOptions);
+            if (response.ok) {
+                console.log(`Documento criado com sucesso!`);
+                setOpenModal(false);
+            } else {
+                throw new Error('Erro ao enviar o formulário');
+            }
+        } catch (error) {
+            console.error("Erro ao enviar o formulário:", error);
+        }
+    };
 
     return(
         <>
@@ -76,10 +145,8 @@ function Home() {
                             <Label >Título</Label>
                             <Input type="text" value={filterTitulo} onChange={(e) => setFilterTitulo(e.target.value)} />
                         </div>
-
                         <div style={styledEntreDiv} >
                             <Label>Tipo</Label>
-
                             <Form.Select value={filterTipo} onChange={(e) => setFilterTipo(e.target.value)}>
                                 <option value={""}>Escolha...</option>
                             {
@@ -87,70 +154,75 @@ function Home() {
                                     <option key={i} value={d.id}>{d.DescTipoDocumento}</option>
                                 ))
                             }
-
                             </Form.Select>
                         </div>
                     </div>
                     <ContainerBox bgC="#ffff" mh="55vh">
-                        <TableIndex filterNbDoc={filterNbDoc} filterTitulo={filterTitulo} filterTipo={filterTipo} />
+                        <TableIndex filterNbDoc={filterNbDoc} filterTitulo={filterTitulo} filterTipo={filterTipo} fetchRecords={fetchRecords}/>
                     </ContainerBox>                
                 </Container>
             </AreaMain>
 
-            <Modal 
+            <Modal
                 isOpen={openModal} 
                 childrenTitle= "Novo Documento"
                 setModalOpen={() => setOpenModal(!openModal)}
-                >
-                    <Container wd="9">
-                        <div style={styledContainerDiv}>
-                            <div style={styledEntreDiv}>
-                                <Label>Número Documento</Label>
-                                <Input type="text" />
-                            </div>
-                            <div >
-                                <Label >Título</Label>
-                                <Input type="text" />
-                            </div>
+            >
+                <Container wd="9">
+                    <div style={styledContainerDiv}>
+                        <div style={styledEntreDiv}>
+                            <Label>Número Documento</Label>
+                            <Input type="text" value={numeroDocumento} onChange={(e) => setNumeroDocumento(e.target.value)}/>
+                            {errors.numeroDocumento && <span>{errors.numeroDocumento}</span>}
                         </div>
-                        <div style={styledContainerDiv}>
-                            <div style={styledEntreDiv}>
-                                <Label>Tipo</Label>
-                                <Form.Select>
-                                    <option value={""}>Escolha...</option>
-                                    {
-                                        optionTipoDoc.map((d, i) => (
-                                            <option key={i} value={d.id}>{d.DescTipoDocumento}</option>
-                                        ))
-                                    }
-                                </Form.Select>
-                            </div>
-                            <div style={styledEntreDiv}>
-                                <Label >Data documento</Label>
-                                <Input type="date"/>
-                            </div>
-                            <div >
-                                <Label >Arquivo</Label>
-                                <Input type="file"/>
-                            </div>
+                        <div>
+                            <Label>Título</Label>
+                            <Input value={titulo} type="text" onChange={(e) => setTitulo(e.target.value)} />
+                            {errors.titulo && <span>{errors.titulo}</span>}
                         </div>
-                        <div style={styledContainerDiv}>
-                            <div >
-                                <Label >Descrição</Label>
-                                <TextArea />
-                            </div>
+                    </div>
+                    <div style={styledContainerDiv}>
+                        <div style={styledEntreDiv}>
+                            <Label>Tipo</Label>
+                            <Form.Select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+                                <option value="">Escolha...</option>
+                                {optionTipoDoc.map((d) => (
+                                    <option key={d.id} value={d.id}>
+                                        {d.DescTipoDocumento}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                            {errors.tipo && <span>{errors.tipo}</span>}
                         </div>
-                        <div style={styledBotaoDiv}>
-                            <Button
-                                txtC="#1b3e75"
-                                bgC='#caf1ff75'
-                                bgHC="#1b3e75"
-                                mr="0"
-                                hg="38px"
-                                
-                                >Adicionar Documento</Button> 
+                        <div style={styledEntreDiv}>
+                            <Label>Data documento</Label>
+                            <Input value={dataDocumento} type="date" onChange={(e) => setDataDocumento(e.target.value)} />
+                            {errors.dataDocumento && <span>{errors.dataDocumento}</span>}
                         </div>
-                    </Container>
+                        <div >
+                            <Label>Arquivo</Label>
+                            <Input type="file" onChange={(e) => setArquivo(e.target.files?.[0] || null)} />
+                            {errors.arquivo && <span>{errors.arquivo}</span>}
+                        </div>
+                    </div>
+                    <div style={styledContainerDiv}>
+                        <div >
+                            <Label >Descrição</Label>
+                            <TextArea value={descricao} 
+                                onChange={(e) => setDescricao(e.target.value)}  />
+                        </div>
+                    </div>
+                    <div style={styledBotaoDiv}>
+                        <Button
+                            txtC="#1b3e75"
+                            bgC='#caf1ff75'
+                            bgHC="#1b3e75"
+                            mr="0"
+                            hg="38px"
+                            onClick={handleFormDocAction}
+                            >Adicionar</Button> 
+                    </div>
+                </Container>
             </Modal>
 
             <Modal 

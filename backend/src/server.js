@@ -11,6 +11,7 @@ app.use(express.json());
 const SetorController = require("./controllers/SetorController");
 const DocumentoController = require("./controllers/DocumentoController"); //Tipo e tramite do documento
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/setor", SetorController);
 app.use("/documento", DocumentoController);
 

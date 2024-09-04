@@ -16,6 +16,15 @@ export const Container = styled.div<ContainerProps>`
     justify-content:center;
 `;
 
+export const ContainerS = styled.div<ContainerProps>`
+    width: ${(props) => props.wd || "10"}0%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+`;
+
+
 export const ContainerBox = styled.div<ContainerProps>`
     background-color: ${(props) => props.bgC || "#e6e6e69e"};
     opacity: ${(props) => props.opacity || ""};
