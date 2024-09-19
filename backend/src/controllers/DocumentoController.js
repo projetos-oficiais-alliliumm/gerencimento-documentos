@@ -26,6 +26,9 @@ router.post("/",upload.single('arquivo'), async(req,res) => {
     const { nb, titulo, desc, tipoid } = req.body;
 
     try{
+        // if (!req.file || !mime.extension(req.file.mimetype).toLowerCase().startsWith('pdf')) {
+        //     return res.status(400).json({ error: "Arquivo não é um PDF válido ou nenhum arquivo foi enviado." });
+        // }
 
         const response = await prisma.documento.create({
             data:{
