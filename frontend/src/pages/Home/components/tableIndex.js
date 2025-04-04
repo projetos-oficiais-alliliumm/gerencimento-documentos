@@ -7,7 +7,7 @@ import { Button } from '../../../components/global/Button';
 import { FaMagnifyingGlassPlus } from "react-icons/fa6";
 
 import Modal from "../../../components/global/Modal";
-import DetalhesDoc from '../components/detalhesDoc';
+import DetalhesDoc from './DetalhesDoc';
 
 const { api } = Api();
 
